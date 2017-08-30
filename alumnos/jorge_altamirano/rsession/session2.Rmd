@@ -1,0 +1,95 @@
+---
+title: "Sesión 2: 30/08/2017"
+output: html_notebook
+---
+
+#Sesión 2: 30/08/2017
+
+```{r}
+library("tidyverse")
+
+#Tribble Dataframe
+df_ej = tibble(genero = c("mujer", "hombre", "mujer", "mujer", "hombre"),
+               estatura = c(1.65, 1.80, 1.7, 1.6, 1.67))
+df_ej
+
+```
+
+## Filtrar 
+### Obtiene un subconjunto de acuerdo
+
+```{r}
+filter(df_ej, genero == "mujer")
+```
+
+```{r}
+filter(df_ej, estatura >= 1.65 & estatura < 1.85)
+```
+
+```{r}
+near(sqrt(2)^2, 2)
+```
+
+```{r}
+select(df_ej, genero)
+```
+
+```{r}
+select(df_ej, -genero)
+```
+
+```{r}
+select(df_ej, starts_with("g"))
+```
+
+```{r}
+select(df_ej, contains("g"))
+```
+
+```{r}
+arrange(df_ej, genero)
+```
+
+```{r}
+arrange(df_ej, desc(estatura))
+```
+
+```{r}
+mutate(df_ej, estatura_cm = estatura*100, estatura_in = estatura_cm/2.54)
+```
+
+```{r}
+summarise(df_ej, promedio = mean(estatura))
+```
+
+```{r}
+by_genero = group_by(df_ej, genero)
+by_genero
+```
+
+```{r}
+summary(df_ej)
+```
+
+```{r}
+pew <- read_delim("http://stat405.had.co.nz/data/pew.txt", "\t", 
+  escape_double = FALSE, trim_ws = TRUE)
+pew
+```
+
+```{r}
+pew_tidy <- gather(data = pew, income, frequency, -religion)
+pew_tidy
+```
+
+```{r}
+ggplot(pew_tidy, aes(x = income, y = frequency, color = religion, group = religion)) +
+  geom_line() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+```{r}
+ggplot(pew_tidy%>%filter(religion == "Catholic" | grepl("(Prot|Christ)", religion)), aes(x = income, y = frequency, color = religion, group = religion)) +
+  geom_line() + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```

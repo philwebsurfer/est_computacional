@@ -1,0 +1,40 @@
+---
+title: 'Tarea 1: 2017/08/23'
+output:
+  html_document: default
+  html_notebook: default
+---
+```{r}
+library(gapminder)
+library(ggplot2)
+```
+#Tarea 1 2017/08/23
+
+```{r}
+ggplot(gapminder, aes(x = continent, y = lifeExp)) + 
+  geom_jitter() #+
+  #facet_wrap(continent ~ lifeExp)
+```
+
+Como se puede observar África es el continente con la menor expectativa de vida debido a que se observa una gran densidad de puntos en la parte inferior, además de que no los puntos no superan los 80 años. 
+
+En cambio Asia tiene la mayor dispersión que va desde los 20 años, hasta más de 80 años.
+
+Europa por otra parte, además de tener menos países (menor número de puntos) concentra una mayor expectativa general de vida en sus países. Aunque Oceanía con pocos países tienen una alta expectativa de años de vida en todos sus países.
+
+## Población en México
+
+```{r}
+ggplot(gapminder[gapminder$country == "Mexico",], aes(x = year, y = pop)) +
+  geom_point(color="navyblue",show.legend = "México") +
+  geom_line(color="blue",size=1.1)
+#   facet_grid(aes(x=gapminder[gapminder$country == "Guatemala",],y=lifeExp,color="red")) +
+#   geom_line(aes(x=gapminder[gapminder$country == "Guatemala",],y=lifeExp,color="red"))
+```
+```{r}
+ggplot(gapminder,aes(continent, pop, color="red"))+
+  geom_point() +
+  geom_line() +
+  facet_wrap(~year)
+```
+
