@@ -93,3 +93,23 @@ ggplot(pew_tidy%>%filter(religion == "Catholic" | grepl("(Prot|Christ)", religio
   geom_line() + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
+
+## Clima en Cuernavaca
+```{r}
+clima <- read_delim("../../../02-Basic-transf/data/clima.txt", escape_double = FALSE, trim_ws = TRUE, delim = "\t")
+clima
+```
+```{r}
+clima_long = gather(clima, day, value, d1:d31, na.rm = TRUE)
+clima_long
+```
+
+```{r mutate, warning=FALSE}
+clima_long <- mutate(clima_long, day,substr(day, 2, stop = 5))
+```
+```{r}
+paths <- "../../../02-Basic-transf/data/specdata/"
+paths <- dir(paths, pattern = "\\.csv$", full.names = TRUE) 
+specdata_us <- map_df(paths, ~read_csv(., col_types = "Tddi"), .id = "filename")
+specdata_us
+```
