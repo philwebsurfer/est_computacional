@@ -102,3 +102,84 @@ mean(juegos)
 #> [1] 0.4636
 ```
 
+### Distribución empírica
+
+```{r}
+dado <- read_delim("../../../04-Probabilidad/data/dado.csv", " ", escape_double = FALSE, trim_ws = TRUE)
+table(dado$observado)
+prop.table(table(dado$observado))
+```
+
+
+```{r}
+data(airquality)
+glimpse(airquality)
+ozono_1 <- airquality$Ozone[!(is.na(airquality$Ozone))]
+ozono_1
+```
+
+```{r}
+n <- length(ozono_1)
+n
+```
+
+### Cálculo de la proba de que x esté entre 0 y 20
+
+1) Extraer el vector d elos valores en este intervalo
+```{r}
+ozono_ab <- ozono_1[0 < ozono_1 & ozono_1 < 20]
+ozono_ab
+```
+
+2) Calculo del  número de casos en este intervalo
+```{r}
+n_ab <- length(ozono_ab)
+n_ab
+```
+
+3) La probabilidad de la la var ozono
+```{r}
+n_ab/n
+```
+# Graficamos
+```{r}
+ggplot(airquality, aes(x = Ozone)) +
+    # geom_histogram(binwidth = 10, aes(y = ..density..)) +
+  geom_density() +
+    labs(y = "")
+```
+
+## Probabilidad condicional e independencia
+
+### Ejemplo 1: lanzamiento de una moneda
+
+```{r}
+volado <- c("A", "S") 
+volados <- volado %>% 
+  crossing(volado) %>% 
+  crossing(volado) 
+volados
+```
+
+```{r}
+volados_cond <- volados %>% 
+    filter(`.` == "A")
+volados_cond
+```
+_Corregir..._
+```{r}
+n_cond <- length(volados_cond)
+n <- length(volados)
+n
+n_cond
+```
+
+### Areas relativas
+
+$$ P(A) = \frac{Area(A)}{Area(\Omega)} $$
+$$P(A \vert B) = \frac{Area(A \cap B)}{Area(B)}$$
+
+```{r}
+knitr::image_uri("session3-fig1.png")
+```
+
