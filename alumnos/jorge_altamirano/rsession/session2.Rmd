@@ -113,3 +113,17 @@ paths <- dir(paths, pattern = "\\.csv$", full.names = TRUE)
 specdata_us <- map_df(paths, ~read_csv(., col_types = "Tddi"), .id = "filename")
 specdata_us
 ```
+
+```{r}
+# Cargamos las siguientes tablas (Tribbles/Data Frames)
+setwd("../../../02-Basic-transf/data/")
+flights <- read_csv("flights.csv")
+flights
+weather <- read_csv("weather.csv")
+weather
+planes <- read_csv("planes.csv")
+planes
+airports <- read_csv("airports.csv")
+airports
+```
+
