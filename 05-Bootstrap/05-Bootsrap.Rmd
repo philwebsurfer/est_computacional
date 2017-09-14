@@ -714,3 +714,14 @@ profvis({
 perfilador de muestreo que registra cambios en la pila de funciones, funciona 
 tomando muestras a intervalos regulares y tabula cuánto tiempo se lleva en cada 
 función.
+
+<!--html_preserve-->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+<!--/html_preserve-->
