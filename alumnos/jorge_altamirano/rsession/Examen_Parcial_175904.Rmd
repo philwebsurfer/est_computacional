@@ -1,0 +1,106 @@
+---
+title: "Examen Parcial 1759004 - Jorge III Altamirano Astorga"
+output: html_notebook
+---
+```{r librerías básicas, message=FALSE, warning=FALSE, include=FALSE}
+library(tidyverse)
+```
+
+## Examen Parcial 
+_1759004 Jorge III Altamirano Astorga_
+
+Doctor Berdichevsky, presento este examen parcial para la Materia de Estadística Computacional (Otoño 2017). Agradeciendo de antemano su consideración y atenciones.
+
+### 1. Manipulación y Visualización de Datos
+
+a) Sí, es una de las bases de datos limpios debido a que cumple algunos de estos requisitos: 
+    
+    1. Cada observación corresponde a un renglón
+    2. Cada variable tiene su columna
+    3. Cada tipo de unidad observacional forma una tabla.
+    
+    
+  Adicionalmente yo agregaría que todas no existen datos $NA$.
+```{r}
+summary(iris)
+```
+
+b) Impresión de las primeras y últimas 6 líneas
+```{r}
+head(iris, n = 6)
+```
+ 
+```{r}
+tail(iris, n = 6)
+```
+
+c) Tenemos 150 observaciones y 5 variables
+
+```{r}
+dim(iris)
+```
+```{r}
+str(iris)
+```
+
+d) La clase atómica de las variables en base al comando del inciso anterior son:
+    * iris es un `data.frame`
+    * Sepal.Length es un `num` ó numérica
+    * Sepal.Width es un `num` ó numérica
+    * Petal.Length es un `num` ó numérica
+    * Petal.Width es un `num` ó numérica
+    * Species es un `Factor` con 3 niveles: setosa, versicolor, virginica
+    
+e) Salida de las primeras 6 líneas sólo de la especie _Setosa_
+
+```{r}
+iris %>% filter(Species == 'setosa') %>% head(n = 6)
+```
+
+f) Salida de las primeras 6 observaciones en orden descendiente de _Petal.Length_
+
+```{r}
+iris %>% arrange(desc(Petal.Length)) %>% head(n=6)
+```
+
+g) Se crea la nueva variable de en mm de _Sepal.Length_. Mostrando las primeras  6 observaciones
+
+```{r}
+sepalLength <- iris$Sepal.Length*10
+head(sepalLength, n=6)
+```
+
+Sin embargo en caso de que se quiera una columna aparte, es necesario usar `mutate`. Ahí no me quedó muy clara la pregunta. Por lo que anoto ambas respuestas aquí crée la columna _Sepal.Length.mm_.
+
+```{r}
+iris <- iris %>% mutate(Sepal.Length.mm = Sepal.Length*10)
+head(iris, n=6)
+```
+
+h) Eliminando las observaciones con valores faltantes en _Sepal.Width_ e indicando el número de observaciones. *No existen observaciones no numéricas o valores negativos*, por lo que el número de observaciones se mantiene en 150.
+
+```{r}
+iris %>% filter(is.na(Sepal.Width) || Sepal.Width <= 0)
+```
+
+i) La media de _Petal.Width_ para cada una de las especies
+
+```{r}
+iris %>% select(Species, Petal.Width) %>% group_by(Species) %>% summarise(media = mean(Petal.Width))
+```
+
+j) Gráfica de dispersión donde $x = Sepal.Length$ y $y = Sepal.Width$; donde el color representa la especie. 
+
+```{r}
+ggplot(data = iris) +
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width, color = Species))
+```
+
+k) Gráfica de cajas de _Petal.Length_ donde se distingan las distintas especies.
+
+```{r}
+ggplot(iris, aes(y = Petal.Length, x = Species)) +
+  geom_boxplot()
+```
+
+### 2. Espacio de probabilidad y Variables Aleatorias
