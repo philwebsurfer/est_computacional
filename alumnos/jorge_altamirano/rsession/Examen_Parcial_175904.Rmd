@@ -104,3 +104,57 @@ ggplot(iris, aes(y = Petal.Length, x = Species)) +
 ```
 
 ### 2. Espacio de probabilidad y Variables Aleatorias
+
+Considere un experimento que consiste en una carrera de caballos con tres caballos numerados del 1 al 3. Si no está permitido que dos o más caballos lleguen a la meta en la misma posición:
+
+a. ¿Cuál es el espacio de resultados $\Omega$ del experimento? 
+```{r}
+factorial(3)
+```
+b. ¿Cuál es esta probabilidad $P(\omega)$?
+$$P(\omega) = \frac{1}{\omega} = \frac{1}{6} = 1.\overline{6}$$
+```{r}
+1/6
+```
+
+c. ¿Cuáles son los elementos de los eventos $A$ y $B$, respectivamente?
+
+d. ¿Cuáles son los elementos del evento $A \cap B$?
+
+e. ¿Cuáles son los elementos del event $A \cup B$?
+
+f. ¿Cuál es la probabilidad $P(B)$ de que ocurra $B$?
+
+g. Liste los valores $X(\omega)$ que toma la variable $X$ para cada uno de los elementos $\omega \in \Omega$
+
+h. ¿Cuál es la probabilidad de $P(X = 1)$?
+
+### 3. Probabilidad condicional
+
+a. ¿Son $X$ y $Y$ variables independientes? 
+
+b. Calcule las probabilidad condicionales $P(Y|X = x)$ para $x = 1,2,3,4$
+
+c. Verifique que $P(Y|X)$ satisface la segunda regla de probabilidad $\sum_{y=o}^4 P(Y = y|X=x) = 1$ para $x=1,2,3,4$
+
+d. Calcule los valores esperados condicionales $E[Y|X = x]$ para $x=1,2,3,4$.
+
+e. Grafique $g(x) = E[Y|X = x]$ para $x=1,2,3,4$.
+
+### 4. Bootstrap
+
+a. La siguiente tabla al repetirla 500 veces
+
+b. Realización de una gráfica de páneles mostrando los métodos normal, percentil y $BC_a$, en el eje horizontal graficando el número de intervalos de confianza ($1,2,...,500) y en el eje vertical graficando los límites de los intervalos, utilizando la función `geom_line` para las 2 líneas, correspondientes a los límites de los intervalos inferiores y superiores.
+
+### 5. Simulación de Variables Aleatorias
+
+a. Encuentre la relación de recurrencia entre $p_{i+1}$ y $p_i$ para $i \ge 0$
+
+b. Utilizando la relación de recurrencia del inciso a., escriba un algoritmo de 5 pasos que genere una variable aleatoria binomial con parámetros $n$ y $p$ mediante el Método de Transformación Inversa Discreta.
+
+c. Escriba en R una función que implemente el algoritmo del inciso $b$ para $n = 10$ y $p = 0.3$
+
+d. Realice 10,000 simulaciones utilizando la semilla 221285 y reporte las primeras simulaciones obtenidas.
+
+e. Genere un histograma con las 10,000 simulaciones anteriores y compárelo con una distribución construida utilizando la función `dbinom` de R.
