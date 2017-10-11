@@ -1,6 +1,8 @@
 ---
 title: "Examen Parcial 1759004 - Jorge III Altamirano Astorga"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 ```{r librerías básicas, message=FALSE, warning=FALSE, include=FALSE}
 library(tidyverse)
