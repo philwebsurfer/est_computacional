@@ -2,10 +2,13 @@
 title: "Examen Parcial 1759004 - Jorge III Altamirano Astorga"
 output:
   pdf_document: default
+  html_document:
+    df_print: paged
   html_notebook: default
 ---
 ```{r librerías básicas, message=FALSE, warning=FALSE, include=FALSE}
 library(tidyverse)
+library(bootstrap)
 ```
 
 ## Examen Parcial 
@@ -140,7 +143,7 @@ f. ¿Cuál es la probabilidad $P(B)$ de que ocurra $B$? _33%_
 
 g. Liste los valores $X(\omega)$ que toma la variable $X$ para cada uno de los elementos $\omega \in \Omega$
 
-$$ X(\omega) = \{2, 1, 3, 2, 1, 3\} $$
+$$ X(\omega) = \{1,2,3\} $$
 
 h. ¿Cuál es la probabilidad de $P(X = 1)$?
 
@@ -253,15 +256,42 @@ a. La siguiente tabla al repetirla 500 veces
 
 ```{r}
 metodo <- c("Normal", "Percentiles", "BC_a")
-fallo_izq <- c(0,0,0)
-fallo_der <- c(0,0,0)
-cobertura <- c(0,0,0)
+bca <- bcanon(x = bootstr, nboot = 2000, theta = mean)
+fallo_izq <- c(-(1-1.95*sd(bootstr2000$bootstr)),
+               as.double(quantile(bootstr2000$bootstr,prob=0.025)),
+               bca$confpoints[1,2])
+fallo_der <- c((1+.25*sd(bootstr2000$bootstr)),
+               as.double(quantile(bootstr2000$bootstr,prob=0.975)),
+               bca$confpoints[8,2])
+cobertura <- c(100-fallo_izq[1]-fallo_der[1],
+               100-fallo_izq[2]-fallo_der[2],
+               100-fallo_izq[3]-fallo_der[3])
 bootstrap <- data.frame(metodo, fallo_izq, fallo_der, cobertura)
 bootstrap
 ```
 
 
-b. Realización de una gráfica de páneles mostrando los métodos normal, percentil y $BC_a$, en el eje horizontal graficando el número de intervalos de confianza ($1,2,...,500) y en el eje vertical graficando los límites de los intervalos, utilizando la función `geom_line` para las 2 líneas, correspondientes a los límites de los intervalos inferiores y superiores.
+b. Realización de una gráfica de páneles mostrando los métodos normal, percentil y $BC_a$, en el eje horizontal graficando el número de intervalos de confianza ($1,2,...,500$) y en el eje vertical graficando los límites de los intervalos, utilizando la función `geom_line` para las 2 líneas, correspondientes a los límites de los intervalos inferiores y superiores.
+
+```{r}
+plot_normal <- ggplot() + 
+  geom_line(aes(x=1:500,y=bootstr2000$bootstr[1:500])) +
+  geom_line(aes(x=1:500,y=fallo_izq[1], col = "fallo izq")) +
+  geom_line(aes(x=1:500,y=fallo_der[1], col = "fallo der")) +
+  ggtitle("Normal")
+plot_percentiles <- ggplot() + 
+  geom_line(aes(x=1:500,y=bootstr2000$bootstr[1:500])) +
+  geom_line(aes(x=1:500,y=fallo_izq[2], col = "fallo izq")) +
+  geom_line(aes(x=1:500,y=fallo_der[2], col = "fallo der")) +
+  ggtitle("Percentiles")
+plot_bca <- ggplot() + 
+  geom_line(aes(x=1:500,y=bootstr2000$bootstr[1:500])) +
+  geom_line(aes(x=1:500,y=fallo_izq[3], col = "fallo izq")) +
+  geom_line(aes(x=1:500,y=fallo_der[3], col = "fallo der")) +
+  ggtitle("BC_a")
+gridExtra::grid.arrange(plot_normal, plot_percentiles, plot_bca)
+```
+
 
 ### 5. Simulación de Variables Aleatorias
 
