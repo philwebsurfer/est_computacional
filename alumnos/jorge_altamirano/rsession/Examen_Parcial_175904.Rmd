@@ -117,7 +117,7 @@ a. ¿Cuál es el espacio de resultados $\Omega$ del experimento?
 $$\Omega = {123, 231, 312, 321, 213, 132}$$
 
 b. ¿Cuál es esta probabilidad $P(\omega)$?
-$$P(\omega) = \frac{1}{\omega} = \frac{1}{6} = 1.\overline{6}$$
+$$P(\omega) = \frac{1}{\omega} = \frac{1}{6} = 1.\overline{6} $$
 ```{r}
 1/6
 ```
