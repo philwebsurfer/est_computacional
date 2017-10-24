@@ -1,5 +1,5 @@
 ---
-title: "11-Tarea"
+title: "07-Tarea"
 output: html_document
 ---
 
@@ -25,7 +25,7 @@ departamentos en grupo de tratamiento (160 deptos.) y grupo de control
 $y_i$ en un conjunto de trampas. Distintos departamentos tuvieron trampas un 
 número distinto de días, y denotamos por $u_i$ el número de días-trampa en el 
 i-ésimo departamento. Se propone el siguiente modelo: 
-$$y_i \sim Poisson(u_iexp(X\beta))$$
+$$y_i \sim Poisson(u_i,exp(X\beta))$$
 donde X reprersenta variables explicativas (predictores), en este caso, 
 consisten en el nivel de cucarachas antes del tratamiento (roach1), una variable
 binaria indicando si se aplica insecticida en el departamento (treatment) y una
@@ -33,9 +33,9 @@ variable binaria indicando si el edificio es de personas mayor (senior). En R el
 modelo se ajusta como sigue:
 
 ```{r}
-roachdata <- read.csv("roachdata.csv", stringsAsFactors = FALSE)
+roachdata <- read.csv("tarea/roachdata.csv", stringsAsFactors = FALSE)
 glm_1 <- glm(y ~ roach1 + treatment + senior, family = poisson, 
-    offset = log(exposure2), data = roachdata)
+  offset = exposure2, data = roachdata)
 ```
 
 * ¿Qué tan bien se ajusta el modelo a los datos? Para responder esta pregunta
@@ -52,22 +52,13 @@ y_rep <- rpois(n, y_hat)
 
 * ¿En que se diferencían los datos observados de los simulados?
 
-3. Neurocientíficos cognitivos investigan que áreas del cerebro se activan 
-durante una tarea específica. Es común que los investigadores observen que un
-área particular del cerebro se encuentra activa y a partir de ello infieran que
-se está llevando a cabo una función cognitiva particuar. En un artículo Poldrack 
-notó que esas inferencias no tenían mucho sustento, y recomendó que se usara la 
-regla de Bayes. Poldrack reportó la siguiente tabla de frecuencias basada en 
-estudios de tareas relacionadas con lenguaje, en la tabla se reporta si la tarea
-esta relacionada con lenguaje y si la región de interés (ROI) estaba activa o 
-inactiva durante la tarea. 
+```{r, echo = FALSE, eval = FALSE}
+library(nullabor)
+roach_null <- lineup(null_dist('y', dist = 'poisson', 
+  params = list(lambda = y_hat)), n = 20, roachdata)
 
-Estudio | Lenguaje | No lenguaje
---------|----------|-------------
-Activa  | 166      | 199
-Inactiva| 703      | 2154
+ggplot(roach_null, aes(x = y)) +
+  facet_wrap(~ .sample) +
+  geom_histogram(binwidth = 3)
+```
 
-Supón que se realiza un estudio y se observa que la región de interés esta 
-activa. Si la probabilidad inicial de que la tarea involucre procesamiento de 
-lenguaje es 0.5, ¿cuál es la probabilidad posterior condicional a que la región
-esta activa?
