@@ -1,0 +1,32 @@
+---
+title: "10-Tarea: bootstrap paramétrico"
+output: html_document
+---
+
+1. Sean $X_1,...,X_n \sim N(\mu, 1)$. Sea $\theta = e^{\mu}$, crea una base de 
+datos usando $\mu=5$ que consista de $n=100$ observaciones.
+
+* Usa el método delta para estimar $\hat{se}$ y crea un intervalo del 95% de
+confianza. Usa boostrap paramétrico para crear un intervalo del 95%. Usa 
+bootstrap no paramétrico para crear un intervalo del 95%. Compara tus respuestas.
+
+
+* Realiza un histograma de replicaciones bootstrap para cada método, estas son
+estimaciones de la distribución de $\hat{\theta}$. El método delta también nos
+da una aproximación a esta distribución: $Normal(\hat{\theta},\hat{se}^2)$. 
+Comparalos con la verdadera distribución de $\hat{\theta}$ (que puedes obtener 
+vía simulación). ¿Cuál es la aproximación más cercana a la verdadera 
+distribución?
+
+Pista: $se(\hat{\mu}) = 1/\sqrt{n}$
+
+2. La base de datos vancouver.csv contiene promedios de precipitación de 
+mediciones (en mm) provenientes de Vancouver entre 1960 y 1994.
+
+* Utiliza b-splines cúbicos para estudiar la relación entre el día y el 
+promedio registrado. Deberás crear una variable numérica x que represente el día
+y utiliza como nudos los extremos y 3 puntos interiores igualmente espaciados, 
+es decir, tendrás 4 regiones. Grafica la curva estimada.
+
+* Crea bandas de errores estándar usando bootstrap paramético y suponiendo que 
+los errores tienen una distribución normal.
