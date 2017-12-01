@@ -1,0 +1,10 @@
+
+model{
+  for(i in 1:N){
+    x[i] ~ dnorm(mu, nu)
+  }
+  # iniciales
+  nu ~ dgamma(3, 3)
+  sigma2 <- 1 / nu
+  mu ~ dnorm(1.5, 1 / 16) 
+}

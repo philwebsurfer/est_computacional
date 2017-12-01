@@ -1,0 +1,9 @@
+
+  model{
+  for(i in 1:N){
+  x[i] ~ dbern(theta)
+  }
+  # inicial
+  theta ~ dbeta(1, 1)
+  }
+  
